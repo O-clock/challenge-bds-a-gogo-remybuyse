@@ -8,6 +8,7 @@ Les 2 autres vous permettent de vous entraîner à concevoir des schémas de bas
 
 ## Exercices
 ### Exo 1
+*(attention, il y a 2 autres exos sous les images ^^ faites celui-ci en priorité quand même.)*   
 - Construire la base de données du projet de la semaine, "Movie DB!(titre provisoire)".
 On veut recréer un équivalent (light) de Allociné, qui présente des films, classés par genres, et associés (encore!) à des mots clés (keywords).
 Créez le schéma de bases de données correspondant à ces maquettes:
