@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 21 Février 2017 à 21:39
+-- Généré le :  Mer 22 Février 2017 à 08:51
 -- Version du serveur :  5.7.11-0ubuntu6
 -- Version de PHP :  7.0.8-0ubuntu0.16.04.3
 
@@ -133,26 +133,35 @@ CREATE TABLE `Style` (
 -- Index pour la table `Actors`
 --
 ALTER TABLE `Actors`
-  ADD PRIMARY KEY (`id_actor`);
+  ADD PRIMARY KEY (`id_actor`),
+  ADD KEY `filmography_id` (`filmography_id`);
 
 --
 -- Index pour la table `Distributor`
 --
 ALTER TABLE `Distributor`
-  ADD PRIMARY KEY (`id_distributor`);
+  ADD PRIMARY KEY (`id_distributor`),
+  ADD KEY `filmography_id` (`filmography_id`),
+  ADD KEY `filmography_id_2` (`filmography_id`);
 
 --
 -- Index pour la table `Film`
 --
 ALTER TABLE `Film`
-  ADD PRIMARY KEY (`id_film`);
+  ADD PRIMARY KEY (`id_film`),
+  ADD KEY `Style_id` (`Style_id`),
+  ADD KEY `Realisator_id` (`Realisator_id`),
+  ADD KEY `Actors_id` (`Actors_id`),
+  ADD KEY `Distributor_id` (`Distributor_id`),
+  ADD KEY `keywords_id` (`keywords_id`);
 
 --
 -- Index pour la table `Filmography`
 --
 ALTER TABLE `Filmography`
   ADD PRIMARY KEY (`id_actor_realisator`),
-  ADD UNIQUE KEY `film_id` (`film_id`);
+  ADD UNIQUE KEY `film_id` (`film_id`),
+  ADD KEY `film_id_2` (`film_id`);
 
 --
 -- Index pour la table `Keywords`
@@ -164,7 +173,8 @@ ALTER TABLE `Keywords`
 -- Index pour la table `Realisator`
 --
 ALTER TABLE `Realisator`
-  ADD PRIMARY KEY (`id_realisator`);
+  ADD PRIMARY KEY (`id_realisator`),
+  ADD KEY `filmography_id` (`filmography_id`);
 
 --
 -- Index pour la table `Style`
@@ -201,6 +211,43 @@ ALTER TABLE `Realisator`
 --
 ALTER TABLE `Style`
   MODIFY `id_style` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `Actors`
+--
+ALTER TABLE `Actors`
+  ADD CONSTRAINT `Actors_ibfk_1` FOREIGN KEY (`filmography_id`) REFERENCES `Filmography` (`id_actor_realisator`);
+
+--
+-- Contraintes pour la table `Distributor`
+--
+ALTER TABLE `Distributor`
+  ADD CONSTRAINT `Distributor_ibfk_1` FOREIGN KEY (`filmography_id`) REFERENCES `Filmography` (`id_actor_realisator`);
+
+--
+-- Contraintes pour la table `Film`
+--
+ALTER TABLE `Film`
+  ADD CONSTRAINT `Film_ibfk_1` FOREIGN KEY (`Style_id`) REFERENCES `Style` (`id_style`),
+  ADD CONSTRAINT `Film_ibfk_2` FOREIGN KEY (`Realisator_id`) REFERENCES `Realisator` (`id_realisator`),
+  ADD CONSTRAINT `Film_ibfk_3` FOREIGN KEY (`Actors_id`) REFERENCES `Actors` (`id_actor`),
+  ADD CONSTRAINT `Film_ibfk_4` FOREIGN KEY (`keywords_id`) REFERENCES `Keywords` (`movie_id`);
+
+--
+-- Contraintes pour la table `Filmography`
+--
+ALTER TABLE `Filmography`
+  ADD CONSTRAINT `Filmography_ibfk_1` FOREIGN KEY (`film_id`) REFERENCES `Film` (`id_film`);
+
+--
+-- Contraintes pour la table `Realisator`
+--
+ALTER TABLE `Realisator`
+  ADD CONSTRAINT `Realisator_ibfk_1` FOREIGN KEY (`filmography_id`) REFERENCES `Filmography` (`id_actor_realisator`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
